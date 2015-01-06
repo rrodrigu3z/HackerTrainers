@@ -1,0 +1,15 @@
+{
+  "name": "HackerTrainers",
+  "version": "1.0.0",
+  "description": "Tech Training For Hackers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ricardo Rodriguez",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.10.7",
+    "jade": "^1.8.2"
+  }
+}
