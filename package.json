@@ -2,9 +2,12 @@
   "name": "HackerTrainers",
   "version": "1.0.0",
   "description": "Tech Training For Hackers",
-  "main": "index.js",
+  "main": "lib/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm run build",
+    "build": "grunt build",
+    "start": "node lib/server.js"
   },
   "author": "Ricardo Rodriguez",
   "license": "MIT",
