@@ -1,0 +1,25 @@
+{
+  "name": "HackerTrainers",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rrodrigu3z/HackerTrainers",
+  "authors": [
+    "Ricardo Rodríguez <rrodrigu3z@gmail.com>"
+  ],
+  "description": "Tech Training For Hackers",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "toastr": "~2.1.0",
+    "angular": "~1.3.8",
+    "angular-resource": "~1.3.8",
+    "angular-route": "~1.3.8"
+  }
+}
