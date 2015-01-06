@@ -2,7 +2,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-concurrent'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-contrib-jade'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-nodemon'
   
   grunt.initConfig
@@ -20,16 +20,14 @@ module.exports = (grunt) ->
     coffee:
       compileAssets:
         expand: true
-        # flatten: true
-          options:
-            sourceMap: true
-          cwd: 'assets/coffee/'
-          src: ['**/*.coffee']
-          dest: 'lib/public/js/'
-          ext: '.js'
+        options:
+          sourceMap: true
+        cwd: 'assets/coffee/'
+        src: ['**/*.coffee']
+        dest: 'lib/public/js/'
+        ext: '.js'
       compileServer:
         expand: true
-        # flatten: true
         options:
           sourceMap: true
         cwd: 'src/'
@@ -37,17 +35,39 @@ module.exports = (grunt) ->
         dest: 'lib/'
         ext: '.js'
     
-    jade:
-      compileServer:
-        expand: true
-        # flatten: true
-        options:
-          sourceMap: true
-        cwd: 'src/views'
-        src: ['**/*.jade']
-        dest: 'lib/views'
-        ext: '.html'
-      
+    copy:
+      css:
+        files: [{
+          expand: true
+          cwd: 'assets/css/'
+          src: ['*.css']
+          dest: 'lib/public/css/'
+        }]
+      html:
+        files: [{
+          expand: true
+          cwd: 'assets/html/'
+          src: ['*.html']
+          dest: 'lib/public/'
+        }]
+      jade:
+        files: [{
+          expand: true
+          cwd: 'src/views/'
+          src: ['**/*.jade']
+          dest: 'lib/views/'
+        }]
+      bower:
+        files: [{
+          expand: true
+          flatten: true
+          cwd: 'bower_components/' 
+          src: [
+            # 'jquery/dist/jquery.js',
+          ]
+          dest: 'lib/public/js/' 
+        }]
+    
     nodemon:
       dev:
         script: 'lib/server.js'
@@ -62,5 +82,5 @@ module.exports = (grunt) ->
         options:
           logConcurrentOutput: true
     
-  grunt.registerTask('build', ['coffee', 'jade', 'copy'])
+  grunt.registerTask('build', ['coffee', 'copy'])
   grunt.registerTask('default', ['build', 'concurrent'])
