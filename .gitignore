@@ -1,6 +1,10 @@
 node_modules
 bower_components
 lib/views
+lib/public/css
+lib/public/js
+lib/public/images
+lib/public/fonts
 *.map
 npm-debug.log
 .DS_Store

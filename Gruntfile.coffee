@@ -3,20 +3,22 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-contrib-stylus'
+  grunt.loadNpmTasks 'grunt-bower-task'
   grunt.loadNpmTasks 'grunt-nodemon'
   
   grunt.initConfig
     watch:
       coffeeAssets:
-        files: 'assets/coffee/*.coffee'
+        files: 'assets/coffee/**/*.coffee'
         tasks: ['coffee:compileAssets']
       coffeeServer:
-        files: 'src/*.coffee'
+        files: 'src/**/*.coffee'
         tasks: ['coffee:compileServer']
-      jade:
-        files: 'src/views/*.jade'
-        tasks: ['jade:compileServer']
-    
+      jadeServer:
+        files: 'src/views/**/*.jade'
+        tasks: ['copy:jade']
+      
     coffee:
       compileAssets:
         expand: true
@@ -35,19 +37,52 @@ module.exports = (grunt) ->
         dest: 'lib/'
         ext: '.js'
     
+    stylus:
+      compileAssets:
+        expand: true
+        options:
+          sourceMap: true
+        cwd: 'assets/stylesheets/'
+        src: ['**/*.styl']
+        dest: 'lib/public/css/'
+        ext: '.css'
+    
+    bower:
+      install:
+        options:
+          targetDir: 'assets/vendor'
+          layout: 'byComponent'
+          
     copy:
       css:
         files: [{
           expand: true
-          cwd: 'assets/css/'
-          src: ['*.css']
+          flatten: true
+          cwd: 'assets/'
+          src: ['**/*.css']
           dest: 'lib/public/css/'
+        }]
+      js:
+        files: [{
+          expand: true
+          flatten: true
+          cwd: 'assets/'
+          src: ['**/*.js']
+          dest: 'lib/public/js/'
+        }]
+      fonts:
+        files: [{
+          expand: true
+          flatten: true
+          cwd: 'assets/'
+          src: ['**/*.eot', 'vendor/bootstrap/*.svg', '**/*.ttf', '**/*.woff']
+          dest: 'lib/public/fonts/'
         }]
       html:
         files: [{
           expand: true
-          cwd: 'assets/html/'
-          src: ['*.html']
+          cwd: 'assets/'
+          src: ['**/*.html']
           dest: 'lib/public/'
         }]
       jade:
@@ -56,16 +91,6 @@ module.exports = (grunt) ->
           cwd: 'src/views/'
           src: ['**/*.jade']
           dest: 'lib/views/'
-        }]
-      bower:
-        files: [{
-          expand: true
-          flatten: true
-          cwd: 'bower_components/' 
-          src: [
-            # 'jquery/dist/jquery.js',
-          ]
-          dest: 'lib/public/js/' 
         }]
     
     nodemon:
@@ -82,5 +107,5 @@ module.exports = (grunt) ->
         options:
           logConcurrentOutput: true
     
-  grunt.registerTask('build', ['coffee', 'copy'])
+  grunt.registerTask('build', ['coffee', 'stylus', 'copy'])
   grunt.registerTask('default', ['build', 'concurrent'])
